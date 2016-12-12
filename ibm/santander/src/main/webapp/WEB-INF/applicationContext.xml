@@ -1,0 +1,60 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.ibm.santander.controller, com.ibm.santander.dao" />
+	
+	<bean id="contaService" class="com.ibm.santander.service.ContaServiceImpl"></bean>
+	
+	<bean id="contaDao" class="com.ibm.santander.dao.ContaDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+		<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+		<value>.jsp</value>
+		</property>
+	</bean>
+	
+	<!--
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://mysql01-farm68.kinghost.net/dragon01" />
+		<property name="username" value="dragon01" />
+		<property name="password" value="erreaga17" />
+	</bean>
+	-->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
+		<property name="url" value="jdbc:derby:/Users/dunedin/db-derby-10.13.1.1-bin/bin/BlueBank" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+	
+	<!--
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
+	-->
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
+	
+	<mvc:annotation-driven />
+	
+</beans>
